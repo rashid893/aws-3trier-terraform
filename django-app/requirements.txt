@@ -1,0 +1,5 @@
+django>=4.2,<5.0
+gunicorn>=21.2
+mysqlclient>=2.2
+django-health-check>=3.18
+whitenoise>=6.5

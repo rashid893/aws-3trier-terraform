@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS 3-Tier App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #38bdf8;
+        }
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card h2 {
+            font-size: 1rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .info-item label {
+            display: block;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+        .info-item span {
+            font-size: 0.95rem;
+            color: #f1f5f9;
+        }
+        .status {
+            display: inline-block;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status.ok { background: #065f46; color: #34d399; }
+        .status.err { background: #7f1d1d; color: #fca5a5; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th {
+            text-align: left;
+            padding: 0.5rem;
+            border-bottom: 1px solid #334155;
+            color: #94a3b8;
+        }
+        td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #1e293b;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AWS 3-Tier Architecture</h1>
+        <p class="subtitle">Django application running on EC2 Auto Scaling Group</p>
+
+        <div class="card">
+            <h2>Instance Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Hostname</label>
+                    <span>{{ hostname }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Python Version</label>
+                    <span>{{ python_version }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Database</label>
+                    <span class="status {% if db_status == 'Connected' %}ok{% else %}err{% endif %}">
+                        {{ db_status }}
+                    </span>
+                </div>
+                <div class="info-item">
+                    <label>Server Time</label>
+                    <span>{{ server_time }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Recent Page Views</h2>
+            {% if recent_views %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Hostname</th>
+                        <th>IP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for view in recent_views %}
+                    <tr>
+                        <td>{{ view.timestamp|date:"Y-m-d H:i:s" }}</td>
+                        <td>{{ view.hostname }}</td>
+                        <td>{{ view.ip_address|default:"-" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p style="color: #64748b;">No page views recorded yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="footer">
+            Managed by Terraform &bull; Deployed on AWS
+        </div>
+    </div>
+</body>
+</html>

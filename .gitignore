@@ -1,0 +1,62 @@
+# =============================================================================
+# Terraform
+# =============================================================================
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform/
+.terraform.lock.hcl
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfvars
+!terraform.tfvars.example
+!environments/*/terraform.tfvars
+
+# =============================================================================
+# Django / Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+db.sqlite3
+db.sqlite3-journal
+staticfiles/
+media/
+*.log
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# =============================================================================
+# IDE / OS
+# =============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# =============================================================================
+# Secrets (never commit these)
+# =============================================================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
